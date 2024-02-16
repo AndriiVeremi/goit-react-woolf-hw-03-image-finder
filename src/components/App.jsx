@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { SearchBar } from './SearchBar/SearchBar';
 import { getSearchImg } from '../api/pixabayAPI';
+import { SearchBar } from './SearchBar/SearchBar';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
@@ -39,6 +40,7 @@ export class App extends Component {
     return (
       <>
         <SearchBar onSubmit={this.onSubmit} />
+        <ImageGallery collection={this.state.collection}/>
       </>
     );
   }
