@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getSearchImg } from '../api/pixabayAPI';
+import { getCollection, getImages } from '../api/pixabayAPI';
 import { SearchBar } from './SearchBar/SearchBar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
@@ -12,29 +12,25 @@ export class App extends Component {
     loading: false,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query) {
+      this.onLoadCollection();
+    }
+  }
+
   onSubmit = data => {
-    console.log('query', data);
     this.setState({ query: data });
   };
 
-  getCollection = async () => {
+  onLoadCollection = async () => {
     try {
-      const data = await getSearchImg(this.state.query, this.state.page);
+      const data = await getCollection(this.state.query, this.state.page);
       const allCollection = data.data.hits;
-      
-      console.log('dataFin2', allCollection);
-      this.setState({ collection: allCollection });
-      
+      this.setState({ collection: allCollection });      
     } catch (error) {
       this.setState({ error });
     }
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
-      this.getCollection();
-    }
-  }
 
   render() {
     return (
