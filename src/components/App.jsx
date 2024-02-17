@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { getCollection, getImages } from '../api/pixabayAPI';
+import { getCollection } from '../api/pixabayAPI';
 import { SearchBar } from './SearchBar/SearchBar';
+import { Modal } from './Modal/Modal';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
@@ -10,6 +11,8 @@ export class App extends Component {
     collection: [],
     error: '',
     loading: false,
+    largeImageURL: '',
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,17 +29,34 @@ export class App extends Component {
     try {
       const data = await getCollection(this.state.query, this.state.page);
       const allCollection = data.data.hits;
-      this.setState({ collection: allCollection });      
+      this.setState({ collection: allCollection });
     } catch (error) {
       this.setState({ error });
     }
   };
 
+  toggleModal = largeImageURL => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      largeImageURL: largeImageURL,
+    }));
+  };
+
   render() {
+    const { collection, showModal, largeImageURL } = this.state;
+    
     return (
       <>
         <SearchBar onSubmit={this.onSubmit} />
-        <ImageGallery collection={this.state.collection}/>
+        {collection.length !== 0 && (
+          <ImageGallery
+            collection={this.state.collection}
+            showModal={this.toggleModal}
+          />
+        )}
+        {showModal && (
+          <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
+        )}
       </>
     );
   }
