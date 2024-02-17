@@ -38,13 +38,14 @@ export class App extends Component {
     try {
       this.setState({ loading: true });
       const data = await getCollection(this.state.query, this.state.page);
-
-      if (data.data.hits.length === 0) {
-        return alert('Sorry image not found...');
-      }
+      
+      const newCollection = data.data.hits;
+      console.log(newCollection)
+      // if (newCollection.length === 0) {
+      //   return alert('Sorry image not found...');
+      // }
 
       const totalPages = Math.floor(data.data.total / 12);
-      const newCollection = data.data.hits;
 
       this.setState(prev => ({
         collection: prev.collection
@@ -92,7 +93,7 @@ export class App extends Component {
           <ImageGallery collection={collection} showModal={this.toggleModal} />
         )}
 
-        {collection.length > 0 && page <= totalPages && !loading (
+        {collection.length > 0 && page <= totalPages && (
           <Button loadMore={this.onLoadMore}>Load More</Button>
         )}
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 axios.defaults.baseURL = 'https://pixabay.com/api/';
 const API_KEY = '34554984-68074c5646cb7a45ce2c04cbc';
@@ -10,3 +11,7 @@ export const getCollection = async (query, page) => {
   return data;
 };
 
+getCollection.propType = {
+  query: PropTypes.string.isRequired, 
+  page: PropTypes.number.isRequired
+}
