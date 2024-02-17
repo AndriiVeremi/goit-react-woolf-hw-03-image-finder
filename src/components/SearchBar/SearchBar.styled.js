@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const img = 'https://img.icons8.com/ios/50/search--v1.png';
+
 export const Header = styled.header`
   top: 0;
   left: 0;
@@ -29,12 +31,12 @@ export const Forma = styled.form`
   overflow: hidden;
 `;
 
-export const SierchBtn = styled.button`
+export const SearchBtn = styled.button`
   display: inline-block;
   width: 48px;
   height: 48px;
   border: 0;
-  /* background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg'); */
+  background-image: url(${img});
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;

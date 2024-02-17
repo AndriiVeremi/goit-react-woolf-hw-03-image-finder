@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Header, Forma, SierchBtn, Span, Input } from './SearchBar.styled';
+import { Header, Forma, SearchBtn, Span, Input } from './SearchBar.styled';
 
 export class SearchBar extends Component {
   
@@ -26,9 +26,9 @@ export class SearchBar extends Component {
     return (
       <Header>
         <Forma onSubmit={this.handleSubmit}>
-          <SierchBtn type="submit">
+          <SearchBtn type="submit">
             <Span className="button-label">Search</Span>
-          </SierchBtn>
+          </SearchBtn>
 
           <Input
             type="text"
