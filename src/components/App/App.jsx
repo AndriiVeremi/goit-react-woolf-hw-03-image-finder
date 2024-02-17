@@ -5,7 +5,8 @@ import { Loader } from '../Loader/Loader';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal/Modal';
-import { Containers } from './App.styled';
+import { Containers, Wrapper, Title, Images, Error } from './App.styled';
+import Logo from '../../images/Pixabay.png';
 
 export class App extends Component {
   state = {
@@ -38,12 +39,12 @@ export class App extends Component {
     try {
       this.setState({ loading: true });
       const data = await getCollection(this.state.query, this.state.page);
-      
+
       const newCollection = data.data.hits;
-      console.log(newCollection)
-      // if (newCollection.length === 0) {
-      //   return alert('Sorry image not found...');
-      // }
+
+      if (newCollection.length === 0) {
+        return alert('Sorry image not found...');
+      }
 
       const totalPages = Math.floor(data.data.total / 12);
 
@@ -97,9 +98,16 @@ export class App extends Component {
           <Button loadMore={this.onLoadMore}>Load More</Button>
         )}
 
+        {collection.length === 0 && (
+          <Wrapper>
+            <Title>Enter your search query!</Title>
+            <Images  src={Logo} width="350" alt="search" />
+          </Wrapper>
+        )}
+
         {loading && <Loader />}
 
-        {error && <h2>Oops.., error: {error}</h2>}
+        {error && <Error>Oops.., error: {error}</Error>}
 
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
