@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { getCollection } from '../api/pixabayAPI';
 import { SearchBar } from './SearchBar/SearchBar';
+import { Loader } from './Loader/Loader';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
@@ -8,6 +9,7 @@ import { Modal } from './Modal/Modal';
 export class App extends Component {
   state = {
     page: 1,
+    totalPages: 0,
     query: '',
     collection: [],
     error: '',
@@ -26,24 +28,28 @@ export class App extends Component {
   }
 
   onSubmit = data => {
-    this.setState({ query: data, collection: [], page: 1 });
+    this.setState({ query: data, collection: [], page: 1, totalPages: 0 });
   };
 
   onLoadCollection = async () => {
     try {
+      this.setState({ loading: true });
       const data = await getCollection(this.state.query, this.state.page);
 
-      console.log('total', data.data.total);
-      console.log('store', data.data.total / 12);
-
+      const totalPages = Math.floor(data.data.total / 12);
       const newCollection = data.data.hits;
+
       this.setState(prev => ({
         collection: prev.collection
           ? [...prev.collection, ...newCollection]
           : newCollection,
+
+        totalPages: totalPages,
       }));
     } catch (error) {
       this.setState({ error });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
@@ -61,20 +67,32 @@ export class App extends Component {
   };
 
   render() {
-    const { collection, error, showModal, largeImageURL } = this.state;
+    const {
+      collection,
+      error,
+      showModal,
+      largeImageURL,
+      totalPages,
+      page,
+      loading,
+    } = this.state;
 
     return (
       <>
         <SearchBar onSubmit={this.onSubmit} />
 
         {collection.length !== 0 && (
-            <ImageGallery
-              collection={this.state.collection}
-              showModal={this.toggleModal}
-            />
+          <ImageGallery
+            collection={collection}
+            showModal={this.toggleModal}
+          />
         )}
 
-        {collection.length !== 0 && <Button loadMore={this.onLoadMore}>Load More</Button>}
+        {collection.length > 0 && page <= totalPages && (
+          <Button loadMore={this.onLoadMore}>Load More</Button>
+        )}
+
+        {loading && <Loader />}
 
         {error && <h2>error: {error}</h2>}
 
