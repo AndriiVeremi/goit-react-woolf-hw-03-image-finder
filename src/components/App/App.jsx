@@ -39,7 +39,7 @@ export class App extends Component {
       this.setState({ loading: true });
       const data = await getCollection(this.state.query, this.state.page);
 
-      if (data.hits.length === 0) {
+      if (data.data.hits.length === 0) {
         return alert('Sorry image not found...');
       }
 
