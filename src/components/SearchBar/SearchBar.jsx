@@ -7,16 +7,21 @@ export class SearchBar extends Component {
     searchQuery: '',
   };
 
+  
+  handleSearch = e => {
+    this.setState({ searchQuery: e.target.value});
+  };
+  
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.searchQuery);
+
+    this.state.searchQuery.trim() === '' ? alert('Enter another word to search') : this.props.onSubmit(this.state.searchQuery) || this.reset();
   };
 
-  handleSearch = e => {
-    const query = e.target.value.trim();
-    this.setState({ searchQuery: query });
+  reset = () => {
+    this.setState({ searchQuery: '' });
   };
-
+  
   render() {
     return (
       <Header>
