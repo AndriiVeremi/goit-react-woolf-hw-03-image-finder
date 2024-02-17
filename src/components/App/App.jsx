@@ -1,10 +1,11 @@
 import { Component } from 'react';
-import { getCollection } from '../api/pixabayAPI';
-import { SearchBar } from './SearchBar/SearchBar';
-import { Loader } from './Loader/Loader';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Button } from './Button/Button';
-import { Modal } from './Modal/Modal';
+import { getCollection } from '../../api/pixabayAPI';
+import { SearchBar } from '../SearchBar/SearchBar';
+import { Loader } from '../Loader/Loader';
+import { ImageGallery } from '../ImageGallery/ImageGallery';
+import { Button } from '../Button/Button';
+import { Modal } from '../Modal/Modal';
+import { Containers } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -78,14 +79,11 @@ export class App extends Component {
     } = this.state;
 
     return (
-      <>
+      <Containers>
         <SearchBar onSubmit={this.onSubmit} />
 
         {collection.length !== 0 && (
-          <ImageGallery
-            collection={collection}
-            showModal={this.toggleModal}
-          />
+          <ImageGallery collection={collection} showModal={this.toggleModal} />
         )}
 
         {collection.length > 0 && page <= totalPages && (
@@ -99,7 +97,7 @@ export class App extends Component {
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
         )}
-      </>
+      </Containers>
     );
   }
 }
