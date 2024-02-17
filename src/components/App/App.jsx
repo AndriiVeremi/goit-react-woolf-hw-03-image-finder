@@ -11,15 +11,17 @@ export class App extends Component {
   state = {
     page: 1,
     totalPages: 0,
+
     query: '',
     collection: [],
-    error: '',
+    error: null,
+
     loading: false,
     largeImageURL: '',
     showModal: false,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_, prevState) {
     if (
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page
@@ -36,6 +38,10 @@ export class App extends Component {
     try {
       this.setState({ loading: true });
       const data = await getCollection(this.state.query, this.state.page);
+
+      if (data.hits.length === 0) {
+        return alert('Sorry image not found...');
+      }
 
       const totalPages = Math.floor(data.data.total / 12);
       const newCollection = data.data.hits;
@@ -86,13 +92,13 @@ export class App extends Component {
           <ImageGallery collection={collection} showModal={this.toggleModal} />
         )}
 
-        {collection.length > 0 && page <= totalPages && (
+        {collection.length > 0 && page <= totalPages && !loading (
           <Button loadMore={this.onLoadMore}>Load More</Button>
         )}
 
         {loading && <Loader />}
 
-        {error && <h2>error: {error}</h2>}
+        {error && <h2>Oops.., error: {error}</h2>}
 
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
