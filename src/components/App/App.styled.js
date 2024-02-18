@@ -28,7 +28,7 @@ export const Title = styled.h1`
 `;
 
 export const Images = styled.img`
-  width: 550px;
+  width: 650px;
   height: auto;
 `;
 

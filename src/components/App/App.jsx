@@ -95,13 +95,13 @@ export class App extends Component {
         )}
 
         {collection.length > 0 && page <= totalPages && (
-          <Button loadMore={this.onLoadMore}>Load More</Button>
+          <Button loadMore={this.onLoadMore}>Load More...</Button>
         )}
 
         {collection.length === 0 && (
           <Wrapper>
             <Title>Enter your search query!</Title>
-            <Images  src={Logo} width="350" alt="search" />
+            <Images  src={Logo} width="650" alt="search" />
           </Wrapper>
         )}
 
