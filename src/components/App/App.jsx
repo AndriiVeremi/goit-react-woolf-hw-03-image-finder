@@ -45,7 +45,11 @@ export class App extends Component {
       const newCollection = data.data.hits;
 
       if (newCollection.length === 0) {
-        return Report.warning('Sorry', 'Sorry, but no images were found for your request. Please try modifying your query and try again.', 'Ok');
+        return Report.warning(
+          'Sorry',
+          'Sorry, but no images were found for your request. Please try modifying your query and try again.',
+          'Ok'
+        );
       }
 
       if (this.state.page === 1) {
@@ -62,7 +66,8 @@ export class App extends Component {
         totalPages: totalPages,
       }));
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: 'Sorry, an error occurred. Please try again.' });
+      Notify.error(`${error}`);
     } finally {
       this.setState({ loading: false });
     }
@@ -107,7 +112,7 @@ export class App extends Component {
         {collection.length === 0 && (
           <Wrapper>
             <Title>Enter your search query!</Title>
-            <Images  src={Logo} width="650" alt="search" />
+            <Images src={Logo} width="650" alt="search" />
           </Wrapper>
         )}
 
