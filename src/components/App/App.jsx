@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 import { getCollection } from '../../api/pixabayAPI';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Loader } from '../Loader/Loader';
@@ -43,7 +45,11 @@ export class App extends Component {
       const newCollection = data.data.hits;
 
       if (newCollection.length === 0) {
-        return alert('Sorry image not found...');
+        return Report.warning('Sorry', 'Sorry, but no images were found for your request. Please try modifying your query and try again.', 'Ok');
+      }
+
+      if (this.state.page === 1) {
+        Notify.info(`${data.data.total} images found.`);
       }
 
       const totalPages = Math.floor(data.data.total / 12);

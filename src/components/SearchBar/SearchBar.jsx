@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 import HederLogo from '../../images/SLogo.png';
 import { Header, Forma, SearchBtn, Span, Input } from './SearchBar.styled';
 
@@ -15,7 +16,7 @@ export class SearchBar extends Component {
     e.preventDefault();
 
     this.state.searchQuery.trim() === ''
-      ? alert('Enter another word to search')
+      ? Report.failure('Sorry', 'Sorry, but I dont know what to search for. Please enter your query in the search field, and Ill see what I can find.', 'Ok')
       : this.props.onSubmit(this.state.searchQuery) || this.reset();
   };
 
@@ -35,8 +36,8 @@ export class SearchBar extends Component {
             type="text"
             value={this.state.searchQuery}
             onChange={this.handleSearch}
-            //   autocomplete="off"
-            // autofocus
+            autocomplete="off"
+            autofocus
             placeholder="Search images and photos"
           />
         </Forma>
