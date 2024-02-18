@@ -25,8 +25,6 @@ export const Wrapper = styled.div`
 export const Title = styled.h1`
   font-size: 40px;
   font-style: italic;
-
-  color: linear-gradient(133deg, rgb(2, 0, 36) 0%, rgb(121, 9, 111) 0%, rgb(0, 215, 255) 100%);
 `;
 
 export const Images = styled.img`
