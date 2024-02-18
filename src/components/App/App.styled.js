@@ -4,6 +4,7 @@ export const Containers = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 30px;
 `;
 
 export const Wrapper = styled.div`
