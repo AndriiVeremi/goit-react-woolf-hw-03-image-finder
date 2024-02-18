@@ -1,17 +1,18 @@
-import { Vortex } from 'react-loader-spinner';
+import { Watch } from 'react-loader-spinner';
 import { Wrapper } from './Loader.styled';
 
 export const Loader = () => {
   return (
     <Wrapper>
-      <Vortex
+      <Watch
         visible={true}
-        height="180"
-        width="180"
-        ariaLabel="vortex-loading"
+        height="280"
+        width="280"
+        radius="48"
+        color="#333"
+        ariaLabel="watch-loading"
         wrapperStyle={{}}
-        wrapperClass="vortex-wrapper"
-        colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
+        wrapperClass=""
       />
     </Wrapper>
   );
