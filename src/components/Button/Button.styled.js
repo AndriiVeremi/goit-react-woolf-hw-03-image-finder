@@ -26,4 +26,7 @@ margin: 0 auto;
   &:focus {
     background-color: #474747;
   }
+  &:active {
+      scale: 0.95;
+    }
 `;
